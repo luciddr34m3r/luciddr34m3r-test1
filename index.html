@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <title>Test Page</title>
+    </head>
+    <body>
+        <form name="search">
+            <input type="text" name="bg-search-string">
+            <input type="submit" name="submit">
+        </form>
+        <div id="livesearch">
+            {{ search_term }}
+        </div>
+        {% for game in games %}
+        <div class="game"><img src="{{ game.thumbnail }}" /> {{ game.name }} Players: {{ game.minplayers }} - {{ game.maxplayers }} Game Length: {{ game.playingtime }} min.</div>
+        {% endfor %}
+    </body>
+
+</html>
