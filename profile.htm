@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <title>Test Page</title>
+        <link href="stylesheets/main.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript">
+        
+            function signinCallback(authResult) {
+                if (authResult['status']['signed_in']) {
+                    // Update the app to reflect a signed in user
+                    // Hide the sign-in button now that the user is authorized, for example:
+                    //document.getElementById('signinButton').setText('style', 'display: none');
+                    var signOutLink = document.createElement('a');
+                    
+                    signOutLink.appendChild(document.createTextNode("Sign Out"));
+                    signOutLink.href = "#";
+                    //signOutLink.onClick = gapi.auth.signOut();
+                    signOutLink.setAttribute("onClick", "JavaScript:gapi.auth.signOut()");
+                    
+                    var authSpan = document.getElementById('signinButton');
+                    authSpan.removeChild(authSpan.firstChild);
+                    authSpan.appendChild(signOutLink);
+                } else {
+
+                    // Update the app to reflect a signed out user
+                    // Possible error values:
+                    //   "user_signed_out" - User is signed-out
+                    //   "access_denied" - User denied access to your app
+                    //   "immediate_failed" - Could not automatically log in the user
+                    console.log('Sign-in state: ' + authResult['error']);
+                }
+            }
+        
+        </script>
+    </head>
+    <body>
+        <span id="signinButton">
+            <span
+                class="g-signin"
+                data-callback="signinCallback"
+                data-clientid="133494664513.apps.googleusercontent.com"
+                data-cookiepolicy="single_host_origin"
+                data-requestvisibleactions="http://schemas.google.com/AddActivity"
+                data-scope="https://www.googleapis.com/auth/plus.login">
+            </span>
+        </span>
+        <form name="search">
+            <input type="text" name="bg-search-string">
+            <input type="submit" name="submit">
+        </form>
+        {% if not games %}
+
+        <div class="error">No results.</div>
+
+        {% endif %}
+        {% for game in games %}
+        <div class="game">
+            <img src="{{ game.thumbnail }}" class="thumbnail"/> 
+            <div class="gameName"> {{ game.name }} </div> 
+            <div class="players">Players: {{ game.minplayers }} - {{ game.maxplayers }} </div> 
+            <div class="length">Game Length: {{ game.playingtime }} min.</div>
+        </div>
+        {% endfor %}
+        
+        
+        
+    <script type="text/javascript">
+      (function() {
+       var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+       po.src = 'https://apis.google.com/js/client:plusone.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+     })();
+    </script>
+        
+    </body>
+
+</html>
